@@ -1,0 +1,660 @@
+/*=====================
+  共通スタイル
+======================*/
+* {
+  box-sizing: border-box;
+}
+
+html {
+  height: 100%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", Meiryo,sans-serif;
+  font-size: 16px;
+  color: #333333;
+  line-height: 1.6;
+  margin: 0;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+/*
+#top_genshin {
+  background-image: url("images/genshin_otameshi5.gif");
+  background-repeat: no-repeat;
+  background-size: 100%;
+  background-position: center;
+  background-attachment: fixed;
+}
+
+#top_genshin .header, .main, .footer {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+*/
+
+/* ページの先頭に戻るボタン */
+.pagetop {
+  color: #ffffff;
+  background-color: #333;
+  text-decoration: none;
+  width: 40px;
+  height: 40px;
+  position: fixed;
+  bottom: 15px;
+  right: 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/*=====================
+  ヘッダーエリア
+======================*/
+/* ヘッダー固定 */
+.header {
+  position:fixed;
+  top: 0;
+  left: 0;
+  background-color: #333;
+  width: 100%;
+  height: 100px;
+  z-index: 100;
+}
+
+/* ロゴイメージ */
+.logo {
+  width: 46px;
+  display: block;
+  margin: 15px auto;
+}
+
+/* ナビゲーション */
+.nav_list {
+  list-style: none;
+  padding: 0;
+  margin: 0 auto 5px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  margin-top: 25px;
+}
+
+.nav_item {
+  flex: 1 0 auto;
+}
+
+.nav_link {
+  color: #fff;
+  background-color: #333;
+  font-size: 16px;
+  font-weight: bold;
+  text-align: center;
+  text-decoration: none;
+  display: block;
+  padding: 0.5em 1em 0.5em 1em;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.nav_link:hover {
+  color: #333;
+  background-color: #fff;
+  opacity: 0.8;
+}
+
+.nav_link i {
+  margin-right: 0.5em;
+}
+
+/* メディアクエリ */
+@media (min-width: 992px) {
+  /* ロゴイメージ */
+  .logo {
+    width: 92px;
+  }
+
+  /* ナビゲーション */
+  .nav_item {
+    flex: 0 0 auto;
+  }
+
+  .nav_link {
+    font-size: 20px;
+  }
+}
+
+/*=====================
+  フッターエリア
+======================*/
+.footer {
+  background-image: linear-gradient(180deg, #333, #333333);
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+/* 著作権表記 */
+.copyright {
+  text-align: center;
+  margin: 0;
+}
+
+.copy {
+  font-size: 12px;
+  color: #ffffff;
+}
+
+/* メディアクエリ */
+@media (min-width: 992px) {
+  /* 著作権表記 */
+  .copy {
+    font-size: 15px;
+  }
+}
+
+/*=====================
+  レイアウト
+======================*/
+
+/* 読み込み動作 */
+
+#loading {
+  width: 100vw;
+  height: 100vh;
+  transition: all 1s;
+  background-color: #333;
+ 
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 9999;
+}
+
+.spinner {
+  color: #ffffff;
+  font-size: 20px;
+  margin: 100px auto;
+  width: 1em;
+  height: 1em;
+  border-radius: 50%;
+  position:relative;
+  text-indent: -9999em;
+  -webkit-animation: load4 1.3s infinite linear;
+  animation: load4 1.3s infinite linear;
+  -webkit-transform: translateZ(0);
+  -ms-transform: translateZ(0);
+  transform: translateZ(0);
+}
+@-webkit-keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+  }
+  12.5% {
+    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  25% {
+    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  37.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  50% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  62.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+  }
+  75% {
+    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+  }
+}
+@keyframes load4 {
+  0%,
+  100% {
+    box-shadow: 0 -3em 0 0.2em, 2em -2em 0 0em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 0;
+  }
+  12.5% {
+    box-shadow: 0 -3em 0 0, 2em -2em 0 0.2em, 3em 0 0 0, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  25% {
+    box-shadow: 0 -3em 0 -0.5em, 2em -2em 0 0, 3em 0 0 0.2em, 2em 2em 0 0, 0 3em 0 -1em, -2em 2em 0 -1em, -3em 0 0 -1em, -2em -2em 0 -1em;
+  }
+  37.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 0, 2em 2em 0 0.2em, 0 3em 0 0em, -2em 2em 0 -1em, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  50% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 0em, 0 3em 0 0.2em, -2em 2em 0 0, -3em 0em 0 -1em, -2em -2em 0 -1em;
+  }
+  62.5% {
+    box-shadow: 0 -3em 0 -1em, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 0, -2em 2em 0 0.2em, -3em 0 0 0, -2em -2em 0 -1em;
+  }
+  75% {
+    box-shadow: 0em -3em 0 -1em, 2em -2em 0 -1em, 3em 0em 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0.2em, -2em -2em 0 0;
+  }
+  87.5% {
+    box-shadow: 0em -3em 0 0, 2em -2em 0 -1em, 3em 0 0 -1em, 2em 2em 0 -1em, 0 3em 0 -1em, -2em 2em 0 0, -3em 0em 0 0, -2em -2em 0 0.2em;
+  }
+}
+
+
+.loaded {
+  opacity: 0;
+  visibility: hidden;
+}
+
+/* コンテナ */
+.container {
+  max-width: 1110px;
+  padding-left: 15px;
+  padding-right: 15px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+/*=====================
+  メインエリア
+======================*/
+.main {
+  flex: 1 0 auto;
+  margin-top: 100px;
+}
+
+.main2 {
+  flex: 1 0 auto;
+  margin-top: 150px;
+}
+
+/* コンテンツ全体を囲むブロック */
+.page_contents {
+  margin-bottom: 50px;
+}
+
+/* メディアクエリ */
+@media (min-width: 992px) {
+  /* コンテナ：２カラム */
+  .col2 {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  /* コンテンツ全体を囲むブロック：２カラム */
+  .col2 .page_contents {
+    flex: 0 0 745px;
+  }
+
+  /* サイドバー：２カラム */
+  .col2 .side {
+    flex: 0 0 300px;
+  }
+
+}
+
+.flex_test-box {
+  background-color: #eee;     /* 背景色指定 */
+  padding:  10px;             /* 余白指定 */
+}
+
+.flex_test-item {
+  padding: 10px;
+  color:  #fff;               /* 文字色 */
+  margin:  10px;              /* 外側の余白 */
+  border-radius:  5px;        /* 角丸指定 */
+}
+
+.flex_test-item:nth-child(1) {
+  background-color:  #2196F3; /* 背景色指定 */
+}
+
+.flex_test-item:nth-child(2) {
+  background-color:  #4CAF50; /* 背景色指定 */
+}
+
+.flex_test-item:nth-child(3) {
+  background-color: #3F51B5; /* 背景色指定 */
+}
+.flex_test-item:nth-child(4) {
+  background-color:  #00BCD4; /* 背景色指定 */
+}
+.flex_test-box {
+  display: flex;              /* フレックスボックスにする */
+}
+
+
+/*=====================
+  コンテンツエリア
+======================*/
+/* 画像の共通スタイル */
+.main img {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+.main2 img {
+  max-width: 100%;
+  min-width: 100%;
+}
+
+/* イメージ画像 */
+
+.YGCC_main_image {
+  margin-bottom: 25px;
+  width:100%;
+  height: 350px;
+  display: flex;
+  /*justify-content: center;
+  align-items: center;*/
+  position: relative;
+  z-index: 10;
+
+  background-image: url(images/YGCC_HOME_header4.jpg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center center;
+
+  /*color: #ffffff;*/
+  font-weight: bold;
+  font-size: 60px;
+  font-style: italic;
+}
+
+.YGCC_main_image_str1 {
+  color: #ffffff;
+  position: absolute;
+  top: 70px;
+  right: 40%;
+}
+
+.YGCC_main_image_str2 {
+  color: #000;
+  position: absolute;
+  bottom: 70px;
+  left: 40.5%;
+}
+
+/* ウェルカムメッセージ */
+.welcome {
+  margin-bottom: 25px;
+}
+
+.welcome_title {
+  font-size: 18px;
+  font-weight: bold;
+  line-height: 1.2;
+  border-bottom: 3px solid #333;
+}
+
+.welcome_image {
+  text-align: center;
+}
+
+/* SNSタイムライン */
+
+.social_title {
+  font-size: 28px;
+  text-align: center;
+  border-bottom: 3px solid #333;
+  margin-bottom: 15px;
+}
+
+.social_item {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.social iframe {
+  max-width: 100%;
+}
+
+/* 関連リンク集 */
+.related {
+  text-align: center;
+  margin-bottom: 30px;
+}
+
+.related_link {
+  color: #333;
+  font-weight: bold;
+  text-decoration: none;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.related_link2 {
+  color: #fff;
+  font-weight: bold;
+  text-decoration: none;
+  display: block;
+  text-align: center;
+}
+
+.related_btn {
+  background-color: #333;
+  border-bottom: 3px solid #000;
+  border-radius: 20px;
+  padding: 0.5em;
+  margin: 0 auto;
+  max-width: 313px;
+}
+
+.related_btn i {
+  margin-right: 0.5em;
+}
+
+.related p {
+  margin-top: 0;
+  margin-bottom: 0;
+  border-radius: 10px;
+  transition: all 0.3s ease-in-out 0s;
+}
+
+.related p:hover {
+  color: #fff;
+  background-color: #333;
+  opacity: 0.8;
+}
+
+.related_btn:hover {
+  color: #333;
+  background-color: #888;
+  opacity: 0.8;
+}
+
+/* ページタイトル */
+.page_title {
+  color: #ffffff;
+  background-color: #333;
+  font-size: 18px;
+  font-weight: bold;
+  text-align: center;
+  border-bottom: 3px solid #705e48;
+  padding: 0.3em;
+  margin-top: 0;
+}
+
+/* メニュー */
+.menu_item {
+  border-bottom: 1px dashed #333;
+  padding-bottom: 15px;
+  margin-bottom: 15px;
+}
+
+.menu_item:last-child {
+  border-bottom: none;
+  margin-bottom: 0;
+}
+
+.menu_title {
+  font-size: 18px;
+}
+
+.menu_text p {
+  margin-bottom: 0;
+}
+
+/* 店舗情報 */
+.shop_info {
+  width: 100%;
+  max-width: 340px;
+  margin: 0 auto;
+}
+
+.shop_info th, .shop_info td {
+  color: #000000;
+  font-size: 15px;
+  border-bottom: 1px dotted #50360d;
+  padding: 0.5em;
+}
+
+.shop_info th {
+  text-align: left;
+}
+
+#genshin_twitter {
+  justify-content: center;
+}
+
+/* メディアクエリ */
+@media (min-width: 992px) {
+  /* イメージ画像 */
+  .main_image {
+    margin-bottom: 50px;
+  }
+
+  /* ウェルカムメッセージ */
+  .welcome {
+    display: flex;
+    margin-bottom: 50px;
+  }
+
+  .welcome_text {
+    width: 530px;
+    padding-right: 30px;
+  }
+
+  .welcome_image {
+    width: 550px;
+  }
+
+  .welcome_title {
+    font-size: 30px;
+    margin-top: 0;
+  }
+
+  /* SNSタイムライン */  
+
+  .social {
+    /*display: flex;
+    justify-content: space-between;*/
+    width: 650px;
+    margin: 0 auto;
+  }
+
+  .social_item {
+    /*width: 300px;*/
+    margin-bottom: 50px;
+    text-align: center;
+  }
+
+  /* 関連リンク集 */
+  .related {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .related_link {
+    width: 300px;
+  }
+
+  /* サイドバー */
+  .side .related {
+    flex-direction: column;
+  }
+
+  .side .social {
+    width: 100%;
+    flex-direction: column;
+  }
+
+   /* メニュー */
+  .menu_item {
+    padding-bottom: 30px;
+    margin-bottom: 30px;
+  }
+
+  .menu_title {
+    font-size: 20px;
+  }
+
+  .menu_text p {
+    padding-left: 15px;
+  }
+
+  .menu_item:nth-child(3) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .menu_item:nth-child(4) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  .menu_item:nth-child(5) {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+  }
+
+  .menu_item:nth-child(6) {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: space-between;
+  }
+
+  .menu_item:nth-child(3) .menu_image,
+  .menu_item:nth-child(4) .menu_image,
+  .menu_item:nth-child(5) .menu_image,
+  .menu_item:nth-child(6) .menu_image {
+    width: 350px;
+  }
+
+  .menu_item:nth-child(3) .menu_text,
+  .menu_item:nth-child(4) .menu_text,
+  .menu_item:nth-child(5) .menu_text,
+  .menu_item:nth-child(6) .menu_text {
+    width: 365px;
+  }
+
+}
+
+/* スマホ向けメディアクエリ */
+@media (max-width:992px) {
+  /* ヘッダー画像 */
+  .YGCC_main_image {
+    margin-bottom: 25px;
+    width:100%;
+    height: 350px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  
+    background-image: url(images/YGCC_HOME_header4.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center center;
+  
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 60px;
+    font-style: italic;
+  }
+  
+}
