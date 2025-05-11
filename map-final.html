@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+	<meta charset="UTF-8">
+	<title>WHSQ</title>
+	<link rel="stylesheet" href="./leaflet.css" />
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
+	<link rel="stylesheet" href="style_map.css">  
+	<script src="./jquery-3.6.0.js"></script>
+	<script src="./leaflet.js"></script>
+	<script>
+	$(function(){
+
+		let box1;
+		let box2;
+
+		//地図の表示の宣言
+		let map = L.map('map_id', {
+			zoomControl: true,
+			center: [0, 0],
+			zoom: 1
+		});
+
+		//表示する地図の種類の指定
+		L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+			attribution: "c <a href='https://www.openstreetmap.org/copyright'>OpenStreetMap</a> contributors"
+		}).addTo(map);
+
+		//スケールの表示
+		L.control.scale({
+			maxWidth: 200,
+			position: 'bottomright',
+			imperial: false
+		}).addTo(map);
+
+		//マーカーアイコンの定義//
+		let markerIcon = L.icon({
+			iconUrl: 'http://www.nowhere.co.jp/blog/wp-content/uploads/2018/07/marker.png',
+			iconSize:     [32, 32],
+			iconAnchor:   [16, 32],
+			popupAnchor:  [0, -32]
+		});
+
+		//素材の緯度経度のリスト//
+		let name_list_VERYFAMOUS = ["ウルル-カタ・ジュタ国立公園","グレートバリアリーフ","フィレンツェ歴史地区","ヴェネツィアとその潟","メテオラ","モンサンミッシェルとその湾","アンコールワット","タージマハル","万里の長城","原爆ドーム","イエローストーン国立公園","グランド・キャニオン国立公園","カナディアン・ロッキー山脈自然公園群","ガラパゴス諸島","ラパ・ヌイ国立公園","イグアス国立公園","ナスカとパルパの地上絵","マチュ・ピチュの歴史保護区","自由の女神像","メンフィスとその墓地遺跡 - ギザからダハシュールまでのピラミッド地帯","アテネのアクロポリス","シドニー・オペラハウス"];
+		let lat_VERYFAMOUS = [-25.342475853449848,-16.47710738034202,43.78061843059965,45.43902403356511,39.721910683264454,48.63610069101533,13.412688450906307,27.175373851471672,40.43212817573923,34.39566004002903,44.431153646858604,36.10055980870136,52.02105256224719,-0.5588078174435122,-27.072638551314288,-25.681266091084265,-14.738757218745075,-13.162921804847244,40.68944462412279,29.977482053119978,37.96727486919663,-33.85665964649811];
+		let lng_VERYFAMOUS = [131.03680240351477,148.01087974828272,11.240880052608206,12.314176211388315,21.63062178451386,-1.5111055352978495,103.86698569744516,78.04220657069298,116.57033198267953,132.4535490825037,-110.59039853049424,-112.11239880431019,-117.11822388636868,-90.75371581742876,-109.34854651581915,-54.45479506024835,-75.12999427370275,-72.54500581790406,-74.04448967312945,31.13248476890086,23.733333265861265,151.2152645113259];
+		let pic_VERYFAMOUS = [];
+
+		let name_list_FAMOUS = [];
+		let lat_FAMOUS = [];
+		let lng_FAMOUS = [];
+
+
+		//リストの作成テンプレ
+		/** 重複チェック用配列 */
+		var randoms = [];//これは使わず、二回目以降リセットするために各難易度のボタンが押された時点で毎回からのリストを作成する
+
+		/** 最小値と最大値 */
+		var min1 = 0, max1 = 21;
+		var min2 = 0, max2 = 67;
+
+		/** 重複チェックしながら乱数作成、これをそれぞれの処理に入れ込む */
+//		for(i = min; i <= max; i++){
+//		  while(true){
+//		    var tmp = intRandom(min, max);
+//		    if(!randoms.includes(tmp)){
+//    		  randoms.push(tmp);
+//    		  break;
+//   		}
+//		  }
+//		}
+ 
+		/** min以上max以下の整数値の乱数を返す */
+		function intRandom1(min1, max1){
+ 			return Math.floor( Math.random() * (max1 - min1 + 1)) + min1;
+		}
+		function intRandom2(min2, max2){
+ 			return Math.floor( Math.random() * (max2 - min2 + 1)) + min2;
+		}
+
+
+		//ポップアップの定義
+		let popup = L.popup({
+			autoClose: false
+		});
+
+
+		//EASYでの処理
+		$("#EASY").on("click",function(){
+			let random_easy = [];
+			for(i = min1; i <= max1; i++){
+			  while(true){
+			    var tmp = intRandom1(min1, max1);
+		    	if(!random_easy.includes(tmp)){
+	    		  random_easy.push(tmp);
+    			  break;
+   				 }
+			  }
+			}//ランダムリスト完成
+
+			marker_list_easy = [];
+			for(j = 0; j < 20; j++){
+				var name_easy = name_list_VERYFAMOUS[random_easy[j]];
+				let lat_easy = lat_VERYFAMOUS[random_easy[j]];
+				let lng_easy = lng_VERYFAMOUS[random_easy[j]];
+				var marker_easy = L.marker([lat_easy,lng_easy],{icon: markerIcon}).addTo(map);
+
+				let popupText_easy = name_easy;
+				marker_easy.bindPopup(popupText_easy);
+				marker_list_easy.push(marker_easy);
+				console.log(name_easy,lat_easy,lng_easy)
+			}//地図にランダムでマーカーと世界遺産名を表示
+
+			$("#EASY").prop("disabled", true);
+			$("#NORMAL").prop("disabled", true);
+			$("#HARD").prop("disabled", true);
+			$("#EXPERT").prop("disabled", true);
+			$("#MASTER").prop("disabled", true);
+			$("#ULTIMATE").prop("disabled", true);//スタートボタンの重複によるバグの防止
+			
+			//タイマースタートの設定ここから
+			let sec = 0;
+			let timer;
+
+			sec = 0;
+			$("#clock").html("0");
+			timer = setInterval(countup, 1000);
+
+			function countup() {
+				sec += 1;
+				$("#clock").html(sec);
+			}//タイマースタートここまで
+
+			//問題数の表示
+			let quiz_numerator = 1;
+			$("#quiz_N").html("1");
+			$("#quiz_D").html("10");
+
+			//写真の表示とピンをクリックしたときの正解不正解の判定と切り替えここから
+			let random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+			$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+
+			console.log(random_easy)
+
+			let quiz_num = 0
+
+			marker_list_easy[0].on('click',function(e){ //ここからは正解のピン
+				if(quiz_num == 0) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[1].on('click',function(e){
+				if(quiz_num == 1) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[2].on('click',function(e){
+				if(quiz_num == 2) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[3].on('click',function(e){
+				if(quiz_num == 3) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[4].on('click',function(e){
+				if(quiz_num == 4) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[5].on('click',function(e){
+				if(quiz_num == 5) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[6].on('click',function(e){
+				if(quiz_num == 6) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[7].on('click',function(e){
+				if(quiz_num == 7) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[8].on('click',function(e){
+				if(quiz_num == 8) {
+					console.log("あたり");
+					quiz_num++;
+					quiz_numerator++;
+					random_easy_pic_num = random_easy[quiz_numerator - 1] + 1;
+					$("#quiz_pic").html('<img src="images/V_num'+random_easy_pic_num+'_C.jpg">');
+					$("#quiz_N").html(quiz_numerator);
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			marker_list_easy[9].on('click',function(e){ //最後の問題
+				if(quiz_num == 9) {
+					console.log("あたり");
+					clearInterval(timer); //タイマーストップ
+					$("#quiz_pic").html('Finish!'); //写真の非表示化
+					if(sec < 10){
+						$("#score").html('SSS');
+					} else if(sec < 30){
+						$("#score").html('SS');
+					} else if(sec < 60){
+						$("#score").html('S');
+					} else if(sec < 90){
+						$("#score").html('A');
+					} else {
+						$("#score").html('B');
+					} //スコアの表示
+					$("#EASY").prop("disabled", false);
+//					$("#NORMAL").prop("disabled", false);
+//					$("#HARD").prop("disabled", false);
+//					$("#EXPERT").prop("disabled", false); //スタートボタンのロック解除
+				} else { 
+					console.log("はずれ");
+				}
+			});
+
+			for(j = 10; j < 20; j++) { //これははずれのピン
+				marker_list_easy[j].on('click',function(e){
+					console.log("はずれ");
+				});
+			}
+
+		});//EASYここまで
+
+	});	
+	</script>
+	<style>
+	#map_id {
+		height: 500px;
+		width: 100%;
+	}
+	.header, main {
+	    list-style: none;
+  	    padding: 0;
+  	    margin: 0 auto 5px;
+  	    display: flex; 
+  	    flex-wrap: wrap;
+  	    justify-content: center;
+	}
+	</style>
+
+	<script>
+		window.onload = function() {
+		const spinner = document.getElementById('loading');
+		spinner.classList.add('loaded');
+		}	
+	</script>
+	
+</head>
+<body>
+
+	<div id="loading">
+		<div class="spinner"></div>
+	</div>
+	
+<header class="header">
+	<h1>World Heritage Site's Quiz</h1>
+</header>
+
+<main class="main">
+	<div class="container">
+		<div class="right_side">
+			<div>ここはどこ？</div>
+			<div id="quiz_pic">
+				(ここに写真が表示されます。)
+			</div>
+			<div>
+				問題数<diu id="quiz_N">-</diu>/<div id="quiz_D">-</div>
+			</div>
+		</div>
+		<div class="main_contents_map">
+			<div>
+					This game is a very simple quiz.<br>
+				When you start, think about where the photos shown are World Hertage Site and click on the pin there.<br>
+				There are 4 + 2 levels and you can choose one.<br>
+				Get a high score to unlock another level quizzes.<br>
+				↓Press the start button to start.↓※現在難易度EASYのみプレイ可能です(2022/2/1)
+			</div>
+			<ul class="nav_list">
+				<li class="nav_item"><button id="EASY">EASY<br>start</button></li>
+				<li class="nav_item"><button id="NORMAL" disabled>NORMAL<br>start</button></li>
+				<li class="nav_item"><button id="HARD" disabled>HARD<br>start</button></li>
+				<li class="nav_item"><button id="EXPERT" disabled>EXPERT<br>start</button></li>
+				<li class="nav_item"><button id="MASTER" disabled>MASTER<br>start</button></li>
+				<li class="nav_item"><button id="ULTIMATE" disabled>ULTIMATE<br>start</button></li>
+			</ul>
+			<br>
+			<div id="map_id"></div>
+			<div>
+				※You can zoom in and out freely.
+			</div>
+		</div>
+		<div class="left_side">
+			<div>経過時間</div>
+			<h2><div id="clock">-</div></h2>
+			<div>秒</div><br>
+			<div>スコア</div>
+			<h2><div id="score">-</div></h2>
+		</div>
+	</div>
+</main>
+
+<footer></footer>
+
+</body>
+</html>
